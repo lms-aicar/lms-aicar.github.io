@@ -1,4 +1,15 @@
 :root { --ink: #073b66; --blue: #075a9c; --cyan: #19b9e6; --paper: #f4faff; --line: #b9d9ef; --gold: #e4aa1a; --red: #a30000; --danger: #ae2e2e; --shadow: 0 20px 60px rgba(7, 59, 102, .16); font-family: "Noto Sans Thai", sans-serif; color: var(--ink); background: var(--paper); }
+[hidden] { display: none !important; }
+.account-shell { max-width: 1120px; margin: auto; padding: 1.5rem; line-height: 1.8; }
+.account-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-bottom: 2px solid var(--blue); padding-bottom: 1rem; }
+.account-brand { display: flex; align-items: center; gap: 1rem; color: var(--ink); font-weight: 700; text-decoration: none; }
+.account-brand img { width: 56px; }
+.account-grid { display: grid; gap: 1.5rem; }
+.account-panel { padding: 1.5rem; background: white; border: 1px solid var(--line); border-top: 4px solid var(--blue); }
+.account-panel dt { color: #4f6b7e; }.account-panel dd { margin: 0 0 1rem; overflow-wrap: anywhere; font-weight: 600; }
+.secondary-button { min-height: 44px; padding: .6rem 1rem; border: 1px solid var(--blue); color: var(--ink); background: white; cursor: pointer; }
+button:disabled { cursor: wait; opacity: .65; }
+@media (min-width: 780px) { .account-grid { grid-template-columns: 1.2fr 1fr; } }
 * { box-sizing: border-box; }
 body { min-height: 100svh; margin: 0; background-color: var(--paper); background-image: linear-gradient(rgba(7, 90, 156, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(7, 90, 156, .08) 1px, transparent 1px); background-size: 26px 26px; }
 button, input { font: inherit; }

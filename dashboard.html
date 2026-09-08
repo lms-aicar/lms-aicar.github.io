@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บัญชีของฉัน | AI Auto Car Blueprint Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="account-shell">
+    <header class="account-header">
+      <a href="dashboard.html" class="account-brand"><img src="logo-2.webp" alt="ตราวิทยาลัยการอาชีพแม่สะเรียง"> AI AUTO CAR / BLUEPRINT LAB</a>
+      <button id="logout" type="button" class="secondary-button">ออกจากระบบ</button>
+    </header>
+    <p id="account-status" class="form-status" role="status" aria-live="polite">กำลังตรวจสอบบัญชี…</p>
+    <section id="account-content" hidden>
+      <h1>สวัสดี <span id="display-name"></span></h1>
+      <p>ยินดีต้อนรับสู่พื้นที่การเรียนรู้รถอัจฉริยะ</p>
+      <div class="account-grid">
+        <section class="account-panel" aria-labelledby="profile-title">
+          <h2 id="profile-title">บัญชีของฉัน</h2>
+          <dl><dt>รหัสผู้ใช้</dt><dd id="account-username"></dd><dt>อีเมล</dt><dd id="account-email"></dd><dt>บทบาท</dt><dd id="account-roles"></dd></dl>
+          <button id="refresh-account" type="button" class="secondary-button">ตรวจสอบสถานะบัญชีอีกครั้ง</button>
+        </section>
+        <section class="account-panel" aria-labelledby="learning-title">
+          <h2 id="learning-title">พื้นที่เรียนของคุณ</h2>
+          <p>ระบบรายวิชาและการลงทะเบียนกำลังเตรียมเปิดให้ใช้งาน ครูจะแจ้งให้ทราบเมื่อเริ่มเรียนได้</p>
+          <p>ระหว่างนี้โปรดตรวจสอบชื่อและอีเมล หากข้อมูลไม่ถูกต้อง ให้ติดต่อครูผู้ดูแล</p>
+        </section>
+      </div>
+    </section>
+    <button id="retry-account" type="button" class="secondary-button" hidden>ลองเชื่อมต่ออีกครั้ง</button>
+  </main>
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
