@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>เปิดใช้บัญชี | AI Auto Car Blueprint Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="brand-panel" aria-label="AI Auto Car Blueprint Lab">
+      <div class="brand-topline"><span class="signal-dot"></span> FIRST-TIME SYSTEM ACCESS</div>
+      <img class="college-seal" src="logo-2.webp" alt="ตราวิทยาลัยการอาชีพแม่สะเรียง">
+      <p class="eyebrow">ACCOUNT ACTIVATION</p>
+      <h1>READY<br><span>TO BUILD?</span></h1>
+      <p class="brand-copy">เปิดใช้บัญชีด้วยรหัสที่ได้รับจากผู้ดูแล จากนั้นตั้งรหัสผ่านสำหรับเข้าสู่ Blueprint Lab</p>
+    </section>
+    <section class="signin-panel" aria-labelledby="activation-title">
+      <div class="form-header"><p class="eyebrow">ACTIVATE ACCOUNT</p><h2 id="activation-title">เปิดใช้บัญชี</h2><p>รหัสเปิดใช้มีอายุจำกัดและใช้ได้เพียงครั้งเดียว</p></div>
+      <form id="account-activation" novalidate>
+        <label for="username">รหัสนักเรียน</label>
+        <input id="username" name="username" autocomplete="username" minlength="3" maxlength="64" required>
+        <label for="activation-code">รหัสเปิดใช้บัญชี</label>
+        <input id="activation-code" name="activationCode" autocomplete="one-time-code" minlength="32" required>
+        <label for="password">ตั้งรหัสผ่าน</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+        <button class="primary-button" type="submit"><span>เปิดใช้บัญชี</span><b aria-hidden="true">-&gt;</b></button>
+      </form>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      <p class="support-note"><a href="index.html">กลับไปหน้าเข้าสู่ระบบ</a> หากรหัสหมดอายุ โปรดติดต่อผู้ดูแลระบบ</p>
+    </section>
+  </main>
+  <script src="config.js"></script>
+  <script src="activate.js"></script>
+</body>
+</html>

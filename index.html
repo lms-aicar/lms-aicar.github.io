@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Auto Car Blueprint Lab - Maesariang Industrial and Community Education College">
+  <title>AI Auto Car Blueprint Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="brand-panel" aria-label="AI Auto Car Blueprint Lab">
+      <div class="brand-topline"><span class="signal-dot"></span> MAESARIANG I.C.E.C. / IT DEPARTMENT</div>
+      <img class="college-seal" src="logo-2.webp" alt="ตราวิทยาลัยการอาชีพแม่สะเรียง">
+      <p class="eyebrow">AUTONOMOUS VEHICLE WORKSHOP</p>
+      <h1>AI AUTO CAR<br><span>BLUEPRINT LAB</span></h1>
+      <p class="brand-copy">ประกอบรถหุ่นยนต์อัจฉริยะจากวงจร สู่การมองเห็นและการตัดสินใจด้วย AI</p>
+      <div class="component-line" aria-hidden="true"><span>CANMV K230</span><i></i><span>CSI 170 DEG</span><i></i><span>NEMA 17</span></div>
+    </section>
+    <section class="signin-panel" aria-labelledby="signin-title">
+      <div class="form-header"><p class="eyebrow">MISSION ACCESS</p><h2 id="signin-title">เข้าสู่ศูนย์ควบคุม</h2><p>ใช้รหัสนักเรียนและรหัสผ่านของคุณ</p></div>
+      <form id="password-login" novalidate>
+        <label for="username">รหัสนักเรียน</label>
+        <input id="username" name="username" autocomplete="username" inputmode="text" minlength="3" maxlength="64" required>
+        <label for="password">รหัสผ่าน</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" minlength="12" maxlength="128" required>
+        <button class="primary-button" type="submit"><span>เข้าสู่ระบบ</span><b aria-hidden="true">-&gt;</b></button>
+      </form>
+      <div class="divider"><span>หรือ</span></div>
+      <button class="google-button" id="google-login" type="button" disabled title="จะเปิดใช้หลังผ่านการทดสอบระบบล็อกอินหลัก">Google Sign-In (เร็ว ๆ นี้)</button>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      <p class="support-note"><a href="activate.html">เปิดใช้บัญชีครั้งแรก</a><br>หากเข้าใช้งานไม่ได้ โปรดติดต่อครูผู้สอนหรือผู้ดูแลระบบ</p>
+    </section>
+  </main>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
