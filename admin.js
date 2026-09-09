@@ -18,6 +18,7 @@
     [user.username, user.displayName, user.email || '—', roleLabels(user.roles)].forEach(function (value) { const cell = document.createElement('td'); cell.textContent = value; row.appendChild(cell); });
     const statusCell = document.createElement('td'); const badge = document.createElement('span'); badge.className = 'status-badge ' + statusClass(user.status); badge.textContent = user.status; statusCell.appendChild(badge); row.appendChild(statusCell);
     const actionCell = document.createElement('td');
+    if (user.status === 'PENDING') { const resend = document.createElement('button'); resend.type = 'button'; resend.className = 'table-action'; resend.textContent = 'ส่งรหัสใหม่'; resend.addEventListener('click', function () { reissueActivation(user, resend); }); actionCell.appendChild(resend); }
     if (user.status !== 'SUSPENDED') { const button = document.createElement('button'); button.type = 'button'; button.className = 'table-action'; button.textContent = 'ระงับบัญชี'; button.addEventListener('click', function () { suspendUser(user, button); }); actionCell.appendChild(button); }
     row.appendChild(actionCell); body.appendChild(row);
   }
@@ -36,12 +37,17 @@
     try { await window.LMS_API.call('ADMIN_SUSPEND_USER', { userId: user.userId }, true); await loadUsers(true); }
     catch (error) { if (error.code === 'UNAUTHENTICATED') return signIn(); status.textContent = error.message; button.disabled = false; }
   }
+  async function reissueActivation(user, button) {
+    button.disabled = true; status.textContent = 'กำลังส่งรหัสเปิดใช้ใหม่…';
+    try { const data = await window.LMS_API.call('ADMIN_REISSUE_ACTIVATION', { userId: user.userId }, true); status.dataset.state = 'success'; status.textContent = 'ส่งรหัสเปิดใช้ใหม่ไปที่ ' + data.email + ' แล้ว'; await loadUsers(true); }
+    catch (error) { if (error.code === 'UNAUTHENTICATED') return signIn(); delete status.dataset.state; status.textContent = error.message; button.disabled = false; }
+  }
   form.addEventListener('submit', async function (event) {
     event.preventDefault(); if (!form.reportValidity()) return;
     submit.disabled = true; status.textContent = 'กำลังสร้างบัญชีและส่งอีเมล…';
     try {
-      const values = new FormData(form); const data = await window.LMS_API.call('ADMIN_CREATE_PENDING_USER', { username: values.get('username'), displayName: values.get('displayName'), email: values.get('email') }, true);
-      form.reset(); status.dataset.state = 'success'; status.textContent = 'ส่งรหัสเปิดใช้บัญชีไปที่ ' + data.username + ' แล้ว'; await loadUsers(true);
+      const values = new FormData(form); const email = values.get('email'); await window.LMS_API.call('ADMIN_CREATE_PENDING_USER', { username: values.get('username'), displayName: values.get('displayName'), email: email }, true);
+      form.reset(); status.dataset.state = 'success'; status.textContent = 'ส่งรหัสเปิดใช้บัญชีไปที่ ' + email + ' แล้ว'; await loadUsers(true);
     } catch (error) { if (error.code === 'UNAUTHENTICATED') return signIn(); delete status.dataset.state; status.textContent = error.message; }
     finally { submit.disabled = false; }
   });
