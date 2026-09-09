@@ -15,7 +15,9 @@
       const payload = Object.assign({}, fields || {}, { action: action });
       if (authenticated) payload.sessionToken = sessionStorage.getItem('lms_session_token') || '';
       const controller = new AbortController();
-      const timeout = setTimeout(function () { controller.abort(); }, 60000);
+      // Password hashing runs server-side. Apps Script needs longer than a typical
+      // fetch timeout for the configured 120,000 PBKDF2 iterations.
+      const timeout = setTimeout(function () { controller.abort(); }, 150000);
       try {
         const response = await fetch(config.apiUrl, {
           method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
