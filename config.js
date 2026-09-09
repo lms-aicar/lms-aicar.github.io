@@ -1,5 +1,5 @@
 // Public deployment configuration only. Never add secrets here.
 window.LMS_CONFIG = {
-  "apiUrl": "https://script.google.com/macros/s/AKfycbxcaVJL-vyiMkXQohE9HLsFuO6JNKb7leq2IYqQxOBZnGg5IFy3DgEswdygbVdMF5WK/exec",
+  "apiUrl": "https://script.google.com/macros/s/AKfycbznBcomPYzNv3hODI9iEkPg03h5d0PCHhX4mRNI8gRdUXs25P7_tgRQ423rIFhn6SVc/exec",
   "googleClientId": ""
 };
