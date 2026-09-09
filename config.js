@@ -1,5 +1,5 @@
+// Public deployment configuration only. Never add secrets here.
 window.LMS_CONFIG = {
-  // The Web App URL is public configuration, not a secret.
-  apiUrl: '',
-  googleClientId: ''
+  "apiUrl": "https://script.google.com/macros/s/AKfycbxcaVJL-vyiMkXQohE9HLsFuO6JNKb7leq2IYqQxOBZnGg5IFy3DgEswdygbVdMF5WK/exec",
+  "googleClientId": ""
 };
