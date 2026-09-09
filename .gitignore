@@ -3,11 +3,13 @@
 !index.html
 !activate.html
 !dashboard.html
+!admin.html
 !styles.css
 !app.js
 !activate.js
 !api.js
 !dashboard.js
+!admin.js
 !config.js
 !logo-2.webp
 !.nojekyll

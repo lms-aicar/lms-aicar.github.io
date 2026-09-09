@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>จัดการนักเรียน | AI Auto Car Blueprint Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="account-shell">
+    <header class="account-header">
+      <a href="dashboard.html" class="account-brand"><img src="logo-2.webp" alt="ตราวิทยาลัยการอาชีพแม่สะเรียง"> AI AUTO CAR / BLUEPRINT LAB</a>
+      <div class="header-actions"><a href="dashboard.html" class="secondary-button">กลับหน้าบัญชี</a><button id="logout" type="button" class="secondary-button">ออกจากระบบ</button></div>
+    </header>
+    <p id="admin-status" class="form-status" role="status" aria-live="polite">กำลังตรวจสอบสิทธิ์…</p>
+    <section id="admin-content" hidden>
+      <h1>จัดการนักเรียน</h1>
+      <p>สร้างบัญชีใหม่ ระบบจะส่งรหัสเปิดใช้บัญชีแบบใช้ครั้งเดียวไปยังอีเมลของนักเรียน</p>
+      <div class="admin-layout">
+        <section class="admin-panel" aria-labelledby="create-title">
+          <h2 id="create-title">เพิ่มนักเรียน</h2>
+          <form id="create-user-form" class="admin-form">
+            <label>รหัสนักเรียนหรือชื่อผู้ใช้<input name="username" autocomplete="off" required minlength="3" maxlength="64" pattern="[A-Za-z0-9._-]+"></label>
+            <label>ชื่อที่แสดง<input name="displayName" required maxlength="120"></label>
+            <label>อีเมลนักเรียน<input name="email" type="email" required maxlength="254"></label>
+            <button id="create-user" class="primary-button" type="submit"><span>ส่งคำเชิญเปิดใช้บัญชี</span><b>→</b></button>
+          </form>
+        </section>
+        <section class="admin-panel" aria-labelledby="users-title">
+          <h2 id="users-title">รายชื่อผู้ใช้</h2>
+          <div class="user-toolbar"><label>ค้นหาชื่อ รหัส หรืออีเมล<input id="user-query" type="search" maxlength="120" autocomplete="off"></label><button id="search-users" type="button" class="secondary-button">ค้นหา</button></div>
+          <div class="user-table-wrap"><table class="user-table"><thead><tr><th>ชื่อผู้ใช้</th><th>ชื่อ</th><th>อีเมล</th><th>บทบาท</th><th>สถานะ</th><th>การทำงาน</th></tr></thead><tbody id="users-body"></tbody></table></div>
+          <div class="user-pager"><button id="load-more" type="button" class="secondary-button" hidden>แสดงเพิ่มเติม</button></div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

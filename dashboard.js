@@ -11,6 +11,7 @@
     status.textContent = 'กำลังตรวจสอบบัญชี…';
     try {
       const data = await window.LMS_API.call('ME', {}, true);
+      document.querySelector('#admin-link').hidden = data.permissions.indexOf('users.read') === -1;
       document.querySelector('#display-name').textContent = data.user.displayName;
       document.querySelector('#account-username').textContent = data.user.username;
       document.querySelector('#account-email').textContent = data.user.email || 'ยังไม่ได้ระบุ';
