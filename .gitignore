@@ -5,6 +5,7 @@
 !dashboard.html
 !admin.html
 !catalog.html
+!courses.html
 !styles.css
 !app.js
 !activate.js
@@ -12,6 +13,7 @@
 !dashboard.js
 !admin.js
 !catalog.js
+!courses.js
 !config.js
 !logo-2.webp
 !.nojekyll
