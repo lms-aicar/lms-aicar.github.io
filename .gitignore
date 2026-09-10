@@ -4,12 +4,14 @@
 !activate.html
 !dashboard.html
 !admin.html
+!catalog.html
 !styles.css
 !app.js
 !activate.js
 !api.js
 !dashboard.js
 !admin.js
+!catalog.js
 !config.js
 !logo-2.webp
 !.nojekyll
