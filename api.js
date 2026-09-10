@@ -19,12 +19,22 @@
       const controller = new AbortController();
       // Password hashing runs server-side. Apps Script needs longer than a typical
       // fetch timeout for the configured 120,000 PBKDF2 iterations.
-      const timeout = setTimeout(function () { controller.abort(); }, 150000);
+      let timeout;
+      const timeoutError = new Error('Request timed out.');
+      timeoutError.name = 'AbortError';
+      const requestTimeout = new Promise(function (_, reject) {
+        timeout = setTimeout(function () {
+          controller.abort();
+          reject(timeoutError);
+        }, 150000);
+      });
       try {
-        const response = await fetch(config.apiUrl, {
+        const request = fetch(config.apiUrl, {
           method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
           body: JSON.stringify(payload), signal: controller.signal, credentials: 'omit', cache: 'no-store'
         });
+        // Apps Script redirects do not always propagate AbortError to fetch.
+        const response = await Promise.race([request, requestTimeout]);
         if (!response.ok) throw new Error('เชื่อมต่อระบบไม่ได้ กรุณาลองใหม่');
         const result = await response.json();
         if (!result.ok) {
