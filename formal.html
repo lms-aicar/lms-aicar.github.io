@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="th">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>จัดการวิชาในภาคเรียน</title><link rel="stylesheet" href="styles.css"></head>
+<body><main class="account-shell">
+  <header class="account-header"><a class="account-brand" href="dashboard.html">AI AUTO CAR / BLUEPRINT LAB</a><a class="secondary-button" href="courses.html">สร้างรายวิชา</a></header>
+  <section class="formal-intro"><p class="eyebrow">FORMAL COURSE CONTROL</p><h1>จัดรายชื่อวิชาในภาคเรียน</h1><p>เลือกวิชาในภาคเรียน แล้วกำหนดครูประจำวิชาหรือเพิ่มนักเรียนทีละคน</p></section>
+  <p id="formal-status" class="form-status" role="status" aria-live="polite"></p>
+  <section id="formal-content" class="account-grid" hidden>
+    <section class="account-panel"><h2>1. เลือกรายวิชา</h2><label>รายวิชาในภาคเรียน<select id="formal-course" required></select></label><p id="course-meta" class="support-note"></p></section>
+    <section class="account-panel"><h2>2. กำหนดครูประจำวิชา</h2><form id="staff-form" class="admin-form"><label>รหัสผู้ใช้ครู<input name="username" required maxlength="80" autocomplete="off"></label><label>บทบาท<select name="staffRole"><option value="TEACHER">ครูผู้สอน</option><option value="ASSISTANT_TEACHER">ผู้ช่วยครู</option></select></label><button class="primary-button" type="submit">กำหนดครู <b>→</b></button></form></section>
+    <section class="account-panel"><h2>3. เพิ่มนักเรียน</h2><form id="enrollment-form" class="admin-form"><label>รหัสนักเรียนหรือชื่อผู้ใช้<input name="username" required maxlength="80" autocomplete="off"></label><button class="primary-button" type="submit">เพิ่มเข้าเรียน <b>→</b></button></form><p class="support-note">เพิ่มได้เฉพาะบัญชีที่เปิดใช้งานแล้ว ระบบจะไม่เพิ่มรายชื่อซ้ำ</p></section>
+  </section>
+</main><script src="config.js"></script><script src="api.js"></script><script src="formal.js"></script></body></html>
