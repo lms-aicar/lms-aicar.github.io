@@ -6,6 +6,7 @@
 !admin.html
 !catalog.html
 !courses.html
+!content.html
 !formal.html
 !learn.html
 !styles.css
@@ -16,6 +17,7 @@
 !admin.js
 !catalog.js
 !courses.js
+!content.js
 !formal.js
 !learn.js
 !config.js
