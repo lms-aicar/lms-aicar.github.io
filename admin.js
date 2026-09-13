@@ -20,6 +20,12 @@
     const actionCell = document.createElement('td');
     if (user.status === 'PENDING') { const resend = document.createElement('button'); resend.type = 'button'; resend.className = 'table-action'; resend.textContent = 'ส่งรหัสใหม่'; resend.addEventListener('click', function () { reissueActivation(user, resend); }); actionCell.appendChild(resend); }
     if (user.status !== 'SUSPENDED') { const button = document.createElement('button'); button.type = 'button'; button.className = 'table-action'; button.textContent = 'ระงับบัญชี'; button.addEventListener('click', function () { suspendUser(user, button); }); actionCell.appendChild(button); }
+    if (user.status === 'PENDING') {
+      const editEmail = document.createElement('button');
+      editEmail.type = 'button'; editEmail.className = 'table-action'; editEmail.textContent = 'แก้อีเมล';
+      editEmail.addEventListener('click', function () { updatePendingEmail(user, editEmail); });
+      actionCell.appendChild(editEmail);
+    }
     row.appendChild(actionCell); body.appendChild(row);
   }
   async function loadUsers(reset) {
@@ -41,6 +47,19 @@
     button.disabled = true; status.textContent = 'กำลังส่งรหัสเปิดใช้ใหม่…';
     try { const data = await window.LMS_API.call('ADMIN_REISSUE_ACTIVATION', { userId: user.userId }, true); status.dataset.state = 'success'; status.textContent = 'ส่งรหัสเปิดใช้ใหม่ไปที่ ' + data.email + ' แล้ว'; await loadUsers(true); }
     catch (error) { if (error.code === 'UNAUTHENTICATED') return signIn(); delete status.dataset.state; status.textContent = error.message; button.disabled = false; }
+  }
+  async function updatePendingEmail(user, button) {
+    const email = window.prompt('อีเมลใหม่สำหรับ ' + user.username, user.email || '');
+    if (email == null || !email.trim()) return;
+    button.disabled = true; status.textContent = 'กำลังแก้ไขอีเมล…';
+    try {
+      const result = await window.LMS_API.call('ADMIN_UPDATE_PENDING_EMAIL', { userId: user.userId, email: email.trim() }, true);
+      status.dataset.state = 'success'; status.textContent = 'แก้ไขอีเมลเป็น ' + result.email + ' แล้ว กดส่งรหัสใหม่เพื่อส่งรหัสไปยังอีเมลนี้';
+      await loadUsers(true);
+    } catch (error) {
+      if (error.code === 'UNAUTHENTICATED') return signIn();
+      delete status.dataset.state; status.textContent = error.message; button.disabled = false;
+    }
   }
   form.addEventListener('submit', async function (event) {
     event.preventDefault(); if (!form.reportValidity()) return;
