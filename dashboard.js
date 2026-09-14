@@ -18,6 +18,12 @@
         learningLink.href = 'learn.html'; learningLink.textContent = 'การเรียนของฉัน';
         document.querySelector('.header-actions').prepend(learningLink);
       }
+      if (!document.querySelector('#take-posttest-link')) {
+        const postTestLink = document.createElement('a');
+        postTestLink.id = 'take-posttest-link'; postTestLink.className = 'secondary-button';
+        postTestLink.href = 'take-posttest.html'; postTestLink.textContent = '\u0e17\u0e33 Post-test';
+        document.querySelector('.header-actions').prepend(postTestLink);
+      }
       if (data.permissions.indexOf('courses.create') !== -1) {
         let coursesLink = document.querySelector('#courses-link');
         if (!coursesLink) {
@@ -32,6 +38,12 @@
           pretestLink.id = 'pretest-link'; pretestLink.className = 'secondary-button';
           pretestLink.href = 'pretest.html'; pretestLink.textContent = 'จัดการ Pre-test';
           document.querySelector('.header-actions').prepend(pretestLink);
+        }
+        if (!document.querySelector('#posttest-link')) {
+          const posttestLink = document.createElement('a');
+          posttestLink.id = 'posttest-link'; posttestLink.className = 'secondary-button';
+          posttestLink.href = 'posttest.html'; posttestLink.textContent = '\u0e08\u0e31\u0e14\u0e01\u0e32\u0e23 Post-test';
+          document.querySelector('.header-actions').prepend(posttestLink);
         }
       }
       if (data.permissions.indexOf('courses.publish') !== -1 && !document.querySelector('#formal-link')) {
