@@ -1,1 +1,26 @@
-<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ทำ Pre-test</title><link rel="stylesheet" href="styles.css"></head><body><main class="account-shell"><header class="account-header"><a class="account-brand" href="dashboard.html">AI AUTO CAR / BLUEPRINT LAB</a></header><h1>แบบทดสอบก่อนเรียน</h1><p id="test-status" class="form-status"></p><section id="start"><label>รายวิชาที่ลงทะเบียน<select id="course"></select></label><button id="start-test" class="primary-button">เริ่มทำ Pre-test</button></section><form id="test-form" hidden><h2 id="test-title"></h2><div id="questions"></div><button class="primary-button" type="submit">ส่งคำตอบ <b>→</b></button></form></main><script src="config.js"></script><script src="api.js"></script><script src="take-pretest.js"></script></body></html>
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ทำ Pre-test</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="account-shell">
+    <header class="account-header"><a class="account-brand" href="dashboard.html">AI AUTO CAR / BLUEPRINT LAB</a></header>
+    <h1>แบบทดสอบก่อนเรียน</h1>
+    <p id="test-status" class="form-status" aria-live="polite"></p>
+    <section id="start" hidden>
+      <label>รายวิชาที่ลงทะเบียน<select id="course"></select></label>
+      <button id="start-test" class="primary-button">เริ่มทำ Pre-test</button>
+    </section>
+    <form id="test-form" hidden>
+      <h2 id="test-title"></h2>
+      <div id="questions"></div>
+      <button class="primary-button" type="submit">ส่งคำตอบ <b>→</b></button>
+    </form>
+  </main>
+  <script src="config.js"></script><script src="api.js"></script><script src="take-pretest.js"></script>
+</body>
+</html>
