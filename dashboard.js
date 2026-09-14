@@ -27,6 +27,12 @@
           document.querySelector('.header-actions').prepend(coursesLink);
         }
         coursesLink.hidden = false;
+        if (!document.querySelector('#pretest-link')) {
+          const pretestLink = document.createElement('a');
+          pretestLink.id = 'pretest-link'; pretestLink.className = 'secondary-button';
+          pretestLink.href = 'pretest.html'; pretestLink.textContent = 'จัดการ Pre-test';
+          document.querySelector('.header-actions').prepend(pretestLink);
+        }
       }
       if (data.permissions.indexOf('courses.publish') !== -1 && !document.querySelector('#formal-link')) {
         const formalLink = document.createElement('a');
