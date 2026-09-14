@@ -9,6 +9,7 @@
 !content.html
 !questions.html
 !pretest.html
+!take-pretest.html
 !formal.html
 !learn.html
 !styles.css
@@ -22,6 +23,7 @@
 !content.js
 !questions.js
 !pretest.js
+!take-pretest.js
 !formal.js
 !learn.js
 !config.js
