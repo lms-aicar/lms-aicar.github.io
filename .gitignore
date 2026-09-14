@@ -8,6 +8,7 @@
 !courses.html
 !content.html
 !questions.html
+!pretest.html
 !formal.html
 !learn.html
 !styles.css
@@ -20,6 +21,7 @@
 !courses.js
 !content.js
 !questions.js
+!pretest.js
 !formal.js
 !learn.js
 !config.js
