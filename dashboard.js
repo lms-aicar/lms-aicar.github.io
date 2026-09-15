@@ -39,6 +39,7 @@
       if (!document.querySelector('#my-activities-link')) { const link=document.createElement('a');link.id='my-activities-link';link.className='secondary-button';link.href='my-activities.html';link.textContent='งานของฉัน';document.querySelector('.header-actions').prepend(link); }
       if (data.permissions.indexOf('courses.create') !== -1) {
         if (!document.querySelector('#activities-link')) { const link=document.createElement('a');link.id='activities-link';link.className='secondary-button';link.href='activities.html';link.textContent='สร้างงานส่ง';document.querySelector('.header-actions').prepend(link); }
+        if (!document.querySelector('#grade-activities-link')) { const link=document.createElement('a');link.id='grade-activities-link';link.className='secondary-button';link.href='grade-activities.html';link.textContent='ตรวจงานส่ง';document.querySelector('.header-actions').prepend(link); }
         let coursesLink = document.querySelector('#courses-link');
         if (!coursesLink) {
           coursesLink = document.createElement('a');
