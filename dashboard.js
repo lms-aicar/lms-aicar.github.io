@@ -51,6 +51,12 @@
           pretestLink.href = 'pretest.html'; pretestLink.textContent = 'จัดการ Pre-test';
           document.querySelector('.header-actions').prepend(pretestLink);
         }
+        if (!document.querySelector('#questions-link')) {
+          const questionsLink = document.createElement('a');
+          questionsLink.id = 'questions-link'; questionsLink.className = 'secondary-button';
+          questionsLink.href = 'questions.html'; questionsLink.textContent = 'คลังคำถาม';
+          document.querySelector('.header-actions').prepend(questionsLink);
+        }
         if (!document.querySelector('#posttest-link')) {
           const posttestLink = document.createElement('a');
           posttestLink.id = 'posttest-link'; posttestLink.className = 'secondary-button';
