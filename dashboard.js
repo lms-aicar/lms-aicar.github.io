@@ -30,6 +30,12 @@
         resultsLink.href = 'results.html'; resultsLink.textContent = 'ผลการประเมิน';
         document.querySelector('.header-actions').prepend(resultsLink);
       }
+      if (!document.querySelector('#progress-link')) {
+        const progressLink = document.createElement('a');
+        progressLink.id = 'progress-link'; progressLink.className = 'secondary-button';
+        progressLink.href = 'progress.html'; progressLink.textContent = 'ความก้าวหน้าการเรียน';
+        document.querySelector('.header-actions').prepend(progressLink);
+      }
       if (data.permissions.indexOf('courses.create') !== -1) {
         let coursesLink = document.querySelector('#courses-link');
         if (!coursesLink) {
