@@ -51,6 +51,12 @@
           posttestLink.href = 'posttest.html'; posttestLink.textContent = '\u0e08\u0e31\u0e14\u0e01\u0e32\u0e23 Post-test';
           document.querySelector('.header-actions').prepend(posttestLink);
         }
+        if (!document.querySelector('#course-results-link')) {
+          const reportLink = document.createElement('a');
+          reportLink.id = 'course-results-link'; reportLink.className = 'secondary-button';
+          reportLink.href = 'course-results.html'; reportLink.textContent = 'รายงานผลรายวิชา';
+          document.querySelector('.header-actions').prepend(reportLink);
+        }
       }
       if (data.permissions.indexOf('courses.publish') !== -1 && !document.querySelector('#formal-link')) {
         const formalLink = document.createElement('a');
