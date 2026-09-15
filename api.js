@@ -31,7 +31,9 @@
         timeout = setTimeout(function () {
           controller.abort();
           reject(timeoutError);
-        }, 150000);
+        // PBKDF2 verification is intentionally expensive. Apps Script can need
+        // several minutes under load, so do not abort a valid sign-in early.
+        }, 330000);
       });
       try {
         const request = fetch(config.apiUrl, {
