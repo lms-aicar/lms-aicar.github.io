@@ -73,6 +73,7 @@
           reportLink.href = 'course-results.html'; reportLink.textContent = 'รายงานผลรายวิชา';
           document.querySelector('.header-actions').prepend(reportLink);
         }
+        if (!document.querySelector('#course-health-link')) { const link=document.createElement('a');link.id='course-health-link';link.className='secondary-button';link.href='course-health.html';link.textContent='สุขภาพรายวิชา';document.querySelector('.header-actions').prepend(link); }
       }
       if (data.permissions.indexOf('courses.publish') !== -1 && !document.querySelector('#formal-link')) {
         const formalLink = document.createElement('a');
