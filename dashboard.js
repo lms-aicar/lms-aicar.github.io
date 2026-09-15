@@ -24,6 +24,12 @@
         postTestLink.href = 'take-posttest.html'; postTestLink.textContent = '\u0e17\u0e33 Post-test';
         document.querySelector('.header-actions').prepend(postTestLink);
       }
+      if (!document.querySelector('#results-link')) {
+        const resultsLink = document.createElement('a');
+        resultsLink.id = 'results-link'; resultsLink.className = 'secondary-button';
+        resultsLink.href = 'results.html'; resultsLink.textContent = 'ผลการประเมิน';
+        document.querySelector('.header-actions').prepend(resultsLink);
+      }
       if (data.permissions.indexOf('courses.create') !== -1) {
         let coursesLink = document.querySelector('#courses-link');
         if (!coursesLink) {
