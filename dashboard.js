@@ -19,6 +19,7 @@
         } catch (_) { canManageCourses = false; }
       }
       document.querySelector('#admin-link').hidden = data.permissions.indexOf('users.read') === -1;
+      if (!document.querySelector('#practical-link')) { const link = document.createElement('a'); link.id = 'practical-link'; link.className = 'secondary-button'; link.href = 'practical.html'; link.textContent = 'ส่งงานปฏิบัติ K230'; document.querySelector('.header-actions').prepend(link); }
       if (!document.querySelector('#learning-link')) {
         const learningLink = document.createElement('a');
         learningLink.id = 'learning-link'; learningLink.className = 'secondary-button';
@@ -46,6 +47,7 @@
       if (!document.querySelector('#my-activities-link')) { const link=document.createElement('a');link.id='my-activities-link';link.className='secondary-button';link.href='my-activities.html';link.textContent='งานของฉัน';document.querySelector('.header-actions').prepend(link); }
       if (!document.querySelector('#notifications-link')) { const link=document.createElement('a');link.id='notifications-link';link.className='secondary-button';link.href='notifications.html';link.textContent='การแจ้งเตือน';document.querySelector('.header-actions').prepend(link); }
       if (canManageCourses) {
+        if (!document.querySelector('#review-practical-link')) { const link = document.createElement('a'); link.id = 'review-practical-link'; link.className = 'secondary-button'; link.href = 'review-practical.html'; link.textContent = 'ตรวจงานปฏิบัติ K230'; document.querySelector('.header-actions').prepend(link); }
         if (!document.querySelector('#activities-link')) { const link=document.createElement('a');link.id='activities-link';link.className='secondary-button';link.href='activities.html';link.textContent='สร้างงานส่ง';document.querySelector('.header-actions').prepend(link); }
         if (!document.querySelector('#grade-activities-link')) { const link=document.createElement('a');link.id='grade-activities-link';link.className='secondary-button';link.href='grade-activities.html';link.textContent='ตรวจงานส่ง';document.querySelector('.header-actions').prepend(link); }
         if (data.permissions.indexOf('courses.create') !== -1 && !document.querySelector('#courses-link')) {

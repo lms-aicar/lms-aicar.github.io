@@ -23,6 +23,8 @@
 !notifications.html
 !formal.html
 !learn.html
+!practical.html
+!review-practical.html
 !styles.css
 !app.js
 !activate.js
@@ -48,6 +50,8 @@
 !notifications.js
 !formal.js
 !learn.js
+!practical.js
+!review-practical.js
 !config.js
 !logo-2.webp
 !.nojekyll
