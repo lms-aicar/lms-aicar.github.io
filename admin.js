@@ -12,6 +12,9 @@
   const rosterInput = document.querySelector('#roster-rows');
   const rosterStatus = document.querySelector('#roster-status');
   const rosterButton = document.querySelector('#import-roster');
+  const k230Section = document.querySelector('#k230-seed-section');
+  const k230Button = document.querySelector('#k230-seed-button');
+  const k230Status = document.querySelector('#k230-seed-status');
   let afterUserId = '';
   let canManageRoles = false;
   let canManageUsers = false;
@@ -106,13 +109,26 @@
       rosterStatus.textContent = 'หยุดนำเข้า: ' + error.message + ' — รายการก่อนหน้าอาจบันทึกแล้ว สามารถกดนำเข้าอีกครั้งเพื่อข้ามบัญชีเดิม';
     } finally { rosterButton.disabled = false; }
   });
+  k230Button.addEventListener('click', async function () {
+    k230Button.disabled = true;
+    try {
+      for (let unitNumber = 1; unitNumber <= 3; unitNumber++) {
+        k230Status.textContent = 'กำลังนำเข้าหน่วย ' + unitNumber + '/3';
+        await window.LMS_API.call('COURSE_SEED_K230_UNIT', { unitNumber: unitNumber }, true);
+      }
+      k230Status.textContent = 'นำเข้ารายวิชา K230 ครบแล้ว สามารถเปิดดูในรายการรายวิชา';
+      k230Status.dataset.state = 'success';
+    } catch (error) {
+      k230Status.textContent = 'หยุดนำเข้า: ' + error.message + ' กดปุ่มอีกครั้งเพื่อทำต่อจากข้อมูลที่บันทึกแล้ว';
+    } finally { k230Button.disabled = false; }
+  });
   search.addEventListener('click', function () { loadUsers(true); });
   query.addEventListener('search', function () { loadUsers(true); });
   more.addEventListener('click', function () { loadUsers(false); });
   logout.addEventListener('click', async function () { logout.disabled = true; try { await window.LMS_API.call('LOGOUT', {}, true); } finally { sessionStorage.removeItem('lms_session_token'); signIn(); } });
   async function initialize() {
     if (!sessionStorage.getItem('lms_session_token')) return signIn();
-    try { const data = await window.LMS_API.call('ME', {}, true); if (data.permissions.indexOf('users.read') === -1) return window.location.replace('dashboard.html'); canManageUsers = data.permissions.indexOf('users.manage') !== -1; canManageRoles = data.permissions.indexOf('roles.manage') !== -1 && data.user.roles.indexOf('SUPER_ADMIN') !== -1; myUserId = data.user.userId; form.closest('.admin-panel').hidden = !canManageUsers; rosterForm.closest('.admin-panel').hidden = !canManageUsers; content.hidden = false; await loadUsers(true); }
+    try { const data = await window.LMS_API.call('ME', {}, true); if (data.permissions.indexOf('users.read') === -1) return window.location.replace('dashboard.html'); canManageUsers = data.permissions.indexOf('users.manage') !== -1; canManageRoles = data.permissions.indexOf('roles.manage') !== -1 && data.user.roles.indexOf('SUPER_ADMIN') !== -1; myUserId = data.user.userId; form.closest('.admin-panel').hidden = !canManageUsers; rosterForm.closest('.admin-panel').hidden = !canManageUsers; k230Section.hidden = data.permissions.indexOf('courses.create') === -1 || data.permissions.indexOf('courses.publish') === -1; content.hidden = false; await loadUsers(true); }
     catch (error) { if (error.code === 'UNAUTHENTICATED') return signIn(); status.textContent = error.message; }
   }
   initialize();
