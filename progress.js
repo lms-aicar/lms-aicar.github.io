@@ -9,6 +9,8 @@
   }
   (async function () {
     try {
+      const reconciliation = await LMS_API.call('RECONCILE_MY_XP', {}, true);
+      if (reconciliation.hasMore) status.textContent = 'กำลังปรับยอด XP เพิ่มเติม โปรดรีเฟรชหน้านี้อีกครั้ง';
       const data = await LMS_API.call('MY_LEARNING_OVERVIEW', {}, true);
       xp.hidden = false;
       line(xp, 'ระดับ ', data.level);
