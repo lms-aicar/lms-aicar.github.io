@@ -8,7 +8,14 @@
   const search = document.querySelector('#search-users');
   const more = document.querySelector('#load-more');
   const logout = document.querySelector('#logout');
+  const rosterForm = document.querySelector('#roster-form');
+  const rosterInput = document.querySelector('#roster-rows');
+  const rosterStatus = document.querySelector('#roster-status');
+  const rosterButton = document.querySelector('#import-roster');
   let afterUserId = '';
+  let canManageRoles = false;
+  let canManageUsers = false;
+  let myUserId = '';
 
   function signIn() { window.location.replace('index.html'); }
   function roleLabels(roles) { return roles.length ? roles.join(', ') : '—'; }
@@ -18,8 +25,26 @@
     [user.username, user.displayName, user.email || '—', roleLabels(user.roles)].forEach(function (value) { const cell = document.createElement('td'); cell.textContent = value; row.appendChild(cell); });
     const statusCell = document.createElement('td'); const badge = document.createElement('span'); badge.className = 'status-badge ' + statusClass(user.status); badge.textContent = user.status; statusCell.appendChild(badge); row.appendChild(statusCell);
     const actionCell = document.createElement('td');
-    if (user.status === 'PENDING') { const resend = document.createElement('button'); resend.type = 'button'; resend.className = 'table-action'; resend.textContent = 'ส่งรหัสใหม่'; resend.addEventListener('click', function () { reissueActivation(user, resend); }); actionCell.appendChild(resend); }
-    if (user.status !== 'SUSPENDED') { const button = document.createElement('button'); button.type = 'button'; button.className = 'table-action'; button.textContent = 'ระงับบัญชี'; button.addEventListener('click', function () { suspendUser(user, button); }); actionCell.appendChild(button); }
+    if (canManageUsers && user.status === 'PENDING') { const resend = document.createElement('button'); resend.type = 'button'; resend.className = 'table-action'; resend.textContent = 'ส่งรหัสใหม่'; resend.addEventListener('click', function () { reissueActivation(user, resend); }); actionCell.appendChild(resend); }
+    if (canManageUsers && user.status !== 'SUSPENDED') { const button = document.createElement('button'); button.type = 'button'; button.className = 'table-action'; button.textContent = 'ระงับบัญชี'; button.addEventListener('click', function () { suspendUser(user, button); }); actionCell.appendChild(button); }
+    if (canManageRoles && user.status === 'ACTIVE' && user.userId !== myUserId) {
+      const selector = document.createElement('select');
+      ['ADMIN', 'ACADEMIC_ADMIN', 'AUDITOR', 'CERTIFICATE_VERIFIER'].forEach(function (role) {
+        const option = document.createElement('option'); option.value = role; option.textContent = role; selector.appendChild(option);
+      });
+      const assign = document.createElement('button'); assign.type = 'button'; assign.className = 'table-action'; assign.textContent = 'เพิ่มบทบาท';
+      const revoke = document.createElement('button'); revoke.type = 'button'; revoke.className = 'table-action'; revoke.textContent = 'ถอนบทบาท';
+      function changeRole(operation) {
+        if (!window.confirm((operation === 'ASSIGN' ? 'เพิ่ม' : 'ถอน') + 'บทบาท ' + selector.value + ' ของ ' + user.username + '?')) return;
+        assign.disabled = true; revoke.disabled = true;
+        window.LMS_API.call('ADMIN_SET_SYSTEM_ROLE', { userId: user.userId, roleCode: selector.value, operation: operation }, true)
+          .then(function () { return loadUsers(true); })
+          .catch(function (error) { status.textContent = error.message; assign.disabled = false; revoke.disabled = false; });
+      }
+      assign.addEventListener('click', function () { changeRole('ASSIGN'); });
+      revoke.addEventListener('click', function () { changeRole('REVOKE'); });
+      actionCell.append(selector, assign, revoke);
+    }
     row.appendChild(actionCell); body.appendChild(row);
   }
   async function loadUsers(reset) {
@@ -51,13 +76,43 @@
     } catch (error) { if (error.code === 'UNAUTHENTICATED') return signIn(); delete status.dataset.state; status.textContent = error.message; }
     finally { submit.disabled = false; }
   });
+  rosterForm.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    const lines = rosterInput.value.split(/\r?\n/).filter(function (line) { return line.trim(); });
+    if (!lines.length) return;
+    const rows = lines.map(function (line) { return line.split('\t').map(function (cell) { return cell.trim(); }); });
+    if (rows.some(function (row) { return row.length < 3 || row.length > 6; })) {
+      rosterStatus.textContent = 'แต่ละบรรทัดต้องมี 3 ถึง 6 คอลัมน์ โดยคั่นด้วย Tab'; return;
+    }
+    rosterButton.disabled = true;
+    let accepted = 0; let existing = 0; let conflicts = 0; let mailFailed = 0;
+    try {
+      for (let start = 0; start < rows.length; start += 10) {
+        rosterStatus.textContent = 'กำลังนำเข้า ' + Math.min(start + 10, rows.length) + '/' + rows.length;
+        const batch = rows.slice(start, start + 10).map(function (row) {
+          return { username: row[0], displayName: row[1], email: row[2], className: row[3] || '', academicYear: row[4] || '', semester: row[5] || '' };
+        });
+        const data = await window.LMS_API.call('ADMIN_IMPORT_ROSTER', { rows: batch }, true);
+        data.results.forEach(function (result) {
+          if (result.status === 'MAIL_ACCEPTED') accepted += 1;
+          else if (result.status === 'ALREADY_EXISTS') existing += 1;
+          else if (result.status === 'CONFLICT') conflicts += 1;
+          else if (result.status === 'MAIL_FAILED') mailFailed += 1;
+        });
+      }
+      rosterStatus.textContent = 'ระบบรับคำขอส่งอีเมล ' + accepted + ' คน, มีบัญชีแล้ว ' + existing + ' คน, ข้อมูลชนกัน ' + conflicts + ' คน, ส่งอีเมลไม่สำเร็จ ' + mailFailed + ' คน';
+      await loadUsers(true);
+    } catch (error) {
+      rosterStatus.textContent = 'หยุดนำเข้า: ' + error.message + ' — รายการก่อนหน้าอาจบันทึกแล้ว สามารถกดนำเข้าอีกครั้งเพื่อข้ามบัญชีเดิม';
+    } finally { rosterButton.disabled = false; }
+  });
   search.addEventListener('click', function () { loadUsers(true); });
   query.addEventListener('search', function () { loadUsers(true); });
   more.addEventListener('click', function () { loadUsers(false); });
   logout.addEventListener('click', async function () { logout.disabled = true; try { await window.LMS_API.call('LOGOUT', {}, true); } finally { sessionStorage.removeItem('lms_session_token'); signIn(); } });
   async function initialize() {
     if (!sessionStorage.getItem('lms_session_token')) return signIn();
-    try { const data = await window.LMS_API.call('ME', {}, true); if (data.permissions.indexOf('users.read') === -1) return window.location.replace('dashboard.html'); content.hidden = false; await loadUsers(true); }
+    try { const data = await window.LMS_API.call('ME', {}, true); if (data.permissions.indexOf('users.read') === -1) return window.location.replace('dashboard.html'); canManageUsers = data.permissions.indexOf('users.manage') !== -1; canManageRoles = data.permissions.indexOf('roles.manage') !== -1 && data.user.roles.indexOf('SUPER_ADMIN') !== -1; myUserId = data.user.userId; form.closest('.admin-panel').hidden = !canManageUsers; rosterForm.closest('.admin-panel').hidden = !canManageUsers; content.hidden = false; await loadUsers(true); }
     catch (error) { if (error.code === 'UNAUTHENTICATED') return signIn(); status.textContent = error.message; }
   }
   initialize();

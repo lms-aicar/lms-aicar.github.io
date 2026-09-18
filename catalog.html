@@ -1,5 +1,12 @@
 <!doctype html>
 <html lang="th">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>รายวิชา | AI Auto Car Blueprint Lab</title><link rel="stylesheet" href="styles.css"></head>
-<body><main class="account-shell"><header class="account-header"><a href="index.html" class="account-brand">AI AUTO CAR / BLUEPRINT LAB</a><div class="header-actions"><a href="dashboard.html" class="secondary-button">บัญชีของฉัน</a></div></header><section><h1>รายวิชาที่เปิดให้ลงทะเบียน</h1><p>เลือกเรียนรายวิชาแบบเปิดได้ด้วยตนเองหลังเข้าสู่ระบบ</p><p id="catalog-status" class="form-status" role="status" aria-live="polite">กำลังโหลดรายวิชา...</p><div id="course-list" class="account-grid"></div></section></main><script src="config.js"></script><script src="api.js"></script><script src="catalog.js"></script></body>
+<body>
+  <main class="account-shell catalog-shell">
+    <header class="account-header"><a href="index.html" class="account-brand">AI AUTO CAR / BLUEPRINT LAB</a><div class="header-actions"><a href="dashboard.html" class="secondary-button">บัญชีของฉัน</a></div></header>
+    <section class="catalog-hero"><p class="eyebrow">LEARNING GARAGE</p><h1>เลือกสนามทดลอง<br><span>เริ่มสร้างของจริง</span></h1><p>ค้นหารายวิชาที่พร้อมให้คุณลงมือประกอบ ทดลอง และพัฒนาโครงงานรถอัจฉริยะ</p><div class="catalog-controls"><label class="search-field"><span>ค้นหารายวิชา</span><input id="course-search" type="search" placeholder="พิมพ์ชื่อหรือหัวข้อที่สนใจ" autocomplete="off"></label><button id="clear-search" class="secondary-button" type="button" hidden>ล้างคำค้น</button></div></section>
+    <section aria-labelledby="catalog-title"><div class="catalog-heading"><div><p class="eyebrow">OPEN COURSES</p><h2 id="catalog-title">วิชาที่ลงทะเบียนได้</h2></div><output id="course-count" aria-live="polite"></output></div><p id="catalog-status" class="form-status" role="status" aria-live="polite">กำลังโหลดรายวิชา...</p><div id="course-list" class="course-grid"></div></section>
+  </main>
+  <script src="config.js"></script><script src="api.js"></script><script src="catalog.js"></script>
+</body>
 </html>

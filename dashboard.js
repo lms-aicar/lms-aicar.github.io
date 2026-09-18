@@ -11,6 +11,13 @@
     status.textContent = 'กำลังตรวจสอบบัญชี…';
     try {
       const data = await window.LMS_API.call('ME', {}, true);
+      let canManageCourses = data.permissions.indexOf('courses.create') !== -1;
+      if (!canManageCourses) {
+        try {
+          const managed = await window.LMS_API.call('COURSE_EDITOR_COURSES', {}, true);
+          canManageCourses = managed.courses.length > 0;
+        } catch (_) { canManageCourses = false; }
+      }
       document.querySelector('#admin-link').hidden = data.permissions.indexOf('users.read') === -1;
       if (!document.querySelector('#learning-link')) {
         const learningLink = document.createElement('a');
@@ -38,17 +45,21 @@
       }
       if (!document.querySelector('#my-activities-link')) { const link=document.createElement('a');link.id='my-activities-link';link.className='secondary-button';link.href='my-activities.html';link.textContent='งานของฉัน';document.querySelector('.header-actions').prepend(link); }
       if (!document.querySelector('#notifications-link')) { const link=document.createElement('a');link.id='notifications-link';link.className='secondary-button';link.href='notifications.html';link.textContent='การแจ้งเตือน';document.querySelector('.header-actions').prepend(link); }
-      if (data.permissions.indexOf('courses.create') !== -1) {
+      if (canManageCourses) {
         if (!document.querySelector('#activities-link')) { const link=document.createElement('a');link.id='activities-link';link.className='secondary-button';link.href='activities.html';link.textContent='สร้างงานส่ง';document.querySelector('.header-actions').prepend(link); }
         if (!document.querySelector('#grade-activities-link')) { const link=document.createElement('a');link.id='grade-activities-link';link.className='secondary-button';link.href='grade-activities.html';link.textContent='ตรวจงานส่ง';document.querySelector('.header-actions').prepend(link); }
-        let coursesLink = document.querySelector('#courses-link');
-        if (!coursesLink) {
-          coursesLink = document.createElement('a');
+        if (data.permissions.indexOf('courses.create') !== -1 && !document.querySelector('#courses-link')) {
+          const coursesLink = document.createElement('a');
           coursesLink.id = 'courses-link'; coursesLink.className = 'secondary-button';
-          coursesLink.href = 'courses.html'; coursesLink.textContent = 'จัดการรายวิชา';
+          coursesLink.href = 'courses.html'; coursesLink.textContent = 'สร้างรายวิชา';
           document.querySelector('.header-actions').prepend(coursesLink);
         }
-        coursesLink.hidden = false;
+        if (!document.querySelector('#content-link')) {
+          const contentLink = document.createElement('a');
+          contentLink.id = 'content-link'; contentLink.className = 'secondary-button';
+          contentLink.href = 'content.html'; contentLink.textContent = 'จัดเนื้อหาบทเรียน';
+          document.querySelector('.header-actions').prepend(contentLink);
+        }
         if (!document.querySelector('#pretest-link')) {
           const pretestLink = document.createElement('a');
           pretestLink.id = 'pretest-link'; pretestLink.className = 'secondary-button';

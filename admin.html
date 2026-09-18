@@ -26,6 +26,15 @@
             <button id="create-user" class="primary-button" type="submit"><span>ส่งคำเชิญเปิดใช้บัญชี</span><b>→</b></button>
           </form>
         </section>
+        <section class="admin-panel" aria-labelledby="roster-title">
+          <h2 id="roster-title">นำเข้ารายชื่อนักเรียน</h2>
+          <p>วางข้อมูลทีละบรรทัด โดยคั่นคอลัมน์ด้วย Tab: รหัสนักเรียน, ชื่อ, อีเมล, ห้อง, ปีการศึกษา, ภาคเรียน ไม่ต้องใส่หัวตาราง ระบบส่งรหัสเปิดใช้ไปทางอีเมลและข้ามบัญชีเดิมเมื่อทำซ้ำ</p>
+          <form id="roster-form" class="admin-form">
+            <label>รายชื่อจากตาราง<textarea id="roster-rows" rows="8" required></textarea></label>
+            <button id="import-roster" class="primary-button" type="submit"><span>นำเข้ารายชื่อ</span><b>→</b></button>
+          </form>
+          <p id="roster-status" class="form-status" role="status" aria-live="polite"></p>
+        </section>
         <section class="admin-panel" aria-labelledby="users-title">
           <h2 id="users-title">รายชื่อผู้ใช้</h2>
           <div class="user-toolbar"><label>ค้นหาชื่อ รหัส หรืออีเมล<input id="user-query" type="search" maxlength="120" autocomplete="off"></label><button id="search-users" type="button" class="secondary-button">ค้นหา</button></div>
