@@ -4,6 +4,7 @@
   const retry = document.querySelector('#retry-account');
   const refresh = document.querySelector('#refresh-account');
   const logout = document.querySelector('#logout');
+  let linkedAccountEmail = '';
   function signIn() { window.location.replace('index.html'); }
   async function loadAccount() {
     if (!sessionStorage.getItem('lms_session_token')) return signIn();
@@ -11,6 +12,7 @@
     status.textContent = 'กำลังตรวจสอบบัญชี…';
     try {
       const data = await window.LMS_API.call('ME', {}, true);
+      linkedAccountEmail = data.user.email || '';
       let canManageCourses = data.permissions.indexOf('courses.create') !== -1;
       if (!canManageCourses) {
         try {
@@ -121,7 +123,7 @@
   });
   document.querySelector('#link-google').addEventListener('click', async function () {
     const button = this; button.disabled = true;
-    try { const code = await window.LMS_GOOGLE.requestCode(); await window.LMS_API.call('LINK_GOOGLE_CODE', { code: code }, true); status.textContent = 'เชื่อมบัญชี Google แล้ว'; }
+    try { const code = await window.LMS_GOOGLE.requestCode(linkedAccountEmail); await window.LMS_API.call('LINK_GOOGLE_CODE', { code: code }, true); status.textContent = 'เชื่อมบัญชี Google แล้ว'; }
     catch (error) { status.textContent = error.message; button.disabled = false; }
   });
   retry.addEventListener('click', loadAccount);
