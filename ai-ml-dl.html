@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI, Machine Learning และ Deep Learning | AI Auto Car LMS</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .concept-shell{max-width:900px;margin:auto;padding:1.5rem}.concept-figure{display:flex;justify-content:center;align-items:center;min-height:370px;margin:2rem 0}.concept-ring{display:flex;align-items:flex-start;justify-content:center;border-radius:50%;box-sizing:border-box;transition:transform .35s,background-color .35s}.concept-ring[data-level="ai"]{width:350px;height:350px;padding-top:22px;background:#d8eaf6;border:3px solid #17617e}.concept-ring[data-level="ml"]{width:270px;height:270px;padding-top:20px;background:#b3dcda;border:3px solid #287c75}.concept-ring[data-level="dl"]{width:185px;height:185px;padding-top:28px;background:#f6d9a6;border:3px solid #a36019}.concept-ring strong{display:block}.concept-ring.active{transform:scale(1.04);box-shadow:0 0 0 5px #172b45}.concept-controls{display:flex;flex-wrap:wrap;gap:.5rem}.concept-controls button{padding:.7rem 1rem}.concept-controls button[aria-pressed="true"]{background:#172b45;color:white}.concept-explanation{min-height:5rem}.concept-order{display:flex;gap:.5rem;flex-wrap:wrap;list-style:none;padding:0}.concept-order li{padding:.65rem;border:1px solid #678;border-radius:.5rem}.concept-order button{margin-left:.4rem}.concept-feedback{min-height:2rem}@media(max-width:500px){.concept-ring[data-level="ai"]{width:290px;height:290px}.concept-ring[data-level="ml"]{width:220px;height:220px}.concept-ring[data-level="dl"]{width:150px;height:150px}}
+  </style>
+</head>
+<body>
+  <main class="concept-shell">
+    <a href="learn.html">← กลับไปบทเรียน</a>
+    <h1>AI, Machine Learning และ Deep Learning</h1>
+    <p>กดแต่ละหัวข้อเพื่อดูความสัมพันธ์ แล้วเรียงแนวคิดจากขอบเขตกว้างที่สุดไปแคบที่สุด</p>
+    <div class="concept-figure" role="img" aria-label="Deep Learning อยู่ภายใน Machine Learning และ Machine Learning อยู่ภายใน AI">
+      <div class="concept-ring" data-level="ai"><strong>AI</strong><div class="concept-ring" data-level="ml"><strong>Machine Learning</strong><div class="concept-ring" data-level="dl"><strong>Deep Learning</strong></div></div></div>
+    </div>
+    <div class="concept-controls" role="group" aria-label="เลือกแนวคิด">
+      <button type="button" data-concept="ai" aria-pressed="true">AI</button>
+      <button type="button" data-concept="ml" aria-pressed="false">Machine Learning</button>
+      <button type="button" data-concept="dl" aria-pressed="false">Deep Learning</button>
+    </div>
+    <p id="concept-explanation" class="concept-explanation" aria-live="polite"></p>
+    <h2>ฝึกเรียงลำดับ</h2>
+    <p>ใช้ปุ่มเลื่อนขึ้นหรือลงได้ทั้งบนคอมพิวเตอร์และโทรศัพท์</p>
+    <ol id="concept-order" class="concept-order" aria-label="ลำดับแนวคิด"></ol>
+    <button id="check-order" type="button" class="primary-button">ตรวจคำตอบ</button>
+    <p id="concept-feedback" class="concept-feedback" role="status" aria-live="polite"></p>
+  </main>
+  <script src="ai-ml-dl.js"></script>
+</body>
+</html>
