@@ -35,8 +35,20 @@
         const certificate = await LMS_API.call('MY_K230_CERTIFICATE_STATUS', {}, true);
         document.querySelector('#certificate').hidden = false;
         document.querySelector('#certificate-status').textContent = certificate.certificateIssued ?
-          'ออกใบประกาศแล้ว: ' + certificate.certificateId : certificate.eligible ?
+          'ออกใบประกาศแล้ว: ' + certificate.certificateId : certificate.certificateRevoked ?
+          'ใบประกาศถูกเพิกถอนแล้ว' : certificate.eligible ?
           'ผ่านเกณฑ์แล้ว กำลังรอระบบออกใบประกาศ' : 'ยังไม่ครบเกณฑ์รับใบประกาศ';
+        const panel = document.querySelector('#certificate');
+        if (certificate.eligible && !certificate.certificateIssued && !certificate.certificateRevoked) {
+          const issue = document.createElement('button'); issue.className = 'primary-button'; issue.textContent = 'ออกใบประกาศของฉัน';
+          issue.addEventListener('click', async function () { issue.disabled = true; try { const result = await LMS_API.call('ISSUE_MY_K230_CERTIFICATE', {}, true); status.textContent = result.status === 'VALID' ? 'ออกใบประกาศแล้ว โปรดรีเฟรชเพื่อดาวน์โหลด' : 'กำลังจัดทำใบประกาศ โปรดลองอีกครั้งภายหลัง'; } catch (error) { status.textContent = error.message; issue.disabled = false; } });
+          panel.append(issue);
+        }
+        if (certificate.certificateIssued) {
+          const download = document.createElement('button'); download.className = 'primary-button'; download.textContent = 'ดาวน์โหลดใบประกาศ PDF';
+          download.addEventListener('click', async function () { download.disabled = true; try { const file = await LMS_API.call('MY_K230_CERTIFICATE_PDF', {}, true); const bytes = Uint8Array.from(atob(file.base64), function (c) { return c.charCodeAt(0); }); const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' })); const a = document.createElement('a'); a.href = url; a.download = file.filename; a.click(); setTimeout(function () { URL.revokeObjectURL(url); }, 60000); } catch (error) { status.textContent = error.message; } finally { download.disabled = false; } });
+          panel.append(download);
+        }
         const labels = { COURSE_CONTENT_INCOMPLETE: 'บทเรียนในรายวิชายังตั้งค่าไม่ครบ', COURSE_UNITS_INCOMPLETE: 'หน่วยเรียนยังตั้งค่าไม่ครบ',
           ACTIVITY_RULES_INCOMPLETE: 'กิจกรรมบังคับยังตั้งค่าไม่ครบ', PRACTICAL_NOT_APPROVED: 'งานปฏิบัติยังไม่ได้รับอนุมัติ',
           MODEL_FILE_MISSING: 'ยังไม่มีไฟล์ best.kmodel ที่ตรวจแล้ว', ANNOTATION_EVIDENCE_MISSING: 'ยังไม่มีภาพ Annotation ที่ตรวจแล้ว',

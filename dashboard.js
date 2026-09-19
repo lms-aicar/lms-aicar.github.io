@@ -19,7 +19,10 @@
         } catch (_) { canManageCourses = false; }
       }
       document.querySelector('#admin-link').hidden = data.permissions.indexOf('users.read') === -1;
+      document.querySelector('#link-google').hidden = !window.LMS_CONFIG || !window.LMS_CONFIG.googleEnabled || !data.user.email;
+      if (data.permissions.indexOf('settings.manage') !== -1 && !document.querySelector('#revoke-certificate-link')) { const link = document.createElement('a'); link.id = 'revoke-certificate-link'; link.className = 'secondary-button'; link.href = 'revoke-certificate.html'; link.textContent = 'เพิกถอนใบประกาศ'; document.querySelector('.header-actions').prepend(link); }
       if (!document.querySelector('#practical-link')) { const link = document.createElement('a'); link.id = 'practical-link'; link.className = 'secondary-button'; link.href = 'practical.html'; link.textContent = 'ส่งงานปฏิบัติ K230'; document.querySelector('.header-actions').prepend(link); }
+      if (!document.querySelector('#skill-passport-link')) { const link = document.createElement('a'); link.id = 'skill-passport-link'; link.className = 'secondary-button'; link.href = 'skill-passport.html'; link.textContent = 'Skill Passport K230'; document.querySelector('.header-actions').prepend(link); }
       if (!document.querySelector('#learning-link')) {
         const learningLink = document.createElement('a');
         learningLink.id = 'learning-link'; learningLink.className = 'secondary-button';
@@ -115,6 +118,11 @@
       if (error.code === 'UNAUTHENTICATED') return signIn();
       status.textContent = 'ยังออกจากระบบไม่สำเร็จ: ' + error.message;
     } finally { logout.disabled = false; }
+  });
+  document.querySelector('#link-google').addEventListener('click', async function () {
+    const button = this; button.disabled = true;
+    try { const code = await window.LMS_GOOGLE.requestCode(); await window.LMS_API.call('LINK_GOOGLE_CODE', { code: code }, true); status.textContent = 'เชื่อมบัญชี Google แล้ว'; }
+    catch (error) { status.textContent = error.message; button.disabled = false; }
   });
   retry.addEventListener('click', loadAccount);
   refresh.addEventListener('click', loadAccount);

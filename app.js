@@ -16,4 +16,16 @@
     } catch (error) { setStatus(error.message); } finally { submit.disabled = false; }
   });
 
+  const googleButton = document.querySelector('#google-login');
+  googleButton.disabled = !window.LMS_CONFIG || !window.LMS_CONFIG.googleEnabled;
+  googleButton.addEventListener('click', async function () {
+    googleButton.disabled = true; setStatus('กำลังตรวจสอบบัญชี Google...', '');
+    try {
+      const code = await window.LMS_GOOGLE.requestCode();
+      const data = await window.LMS_API.call('LOGIN_GOOGLE_CODE', { code: code });
+      sessionStorage.setItem('lms_session_token', data.sessionToken);
+      window.location.assign('dashboard.html');
+    } catch (error) { setStatus(error.message); googleButton.disabled = false; }
+  });
+
 }());
