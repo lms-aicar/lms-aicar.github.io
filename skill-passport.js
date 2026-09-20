@@ -18,6 +18,12 @@
         const title = document.createElement('h3'); title.textContent = badge.name;
         const detail = document.createElement('p'); detail.textContent = (badge.earned ? 'ได้รับแล้ว · ' : 'ยังไม่ได้รับ · ') + badge.description;
         card.append(title, detail); badgeList.append(card); });
-    } catch (error) { status.textContent = error.message; }
+    } catch (error) {
+      if (error.code === 'FORBIDDEN') {
+        status.textContent = 'Skill Passport นี้ใช้กับรายวิชา K230 กรุณาลงทะเบียนรายวิชา K230 ก่อน';
+        const link = document.createElement('a'); link.href = 'catalog.html'; link.className = 'secondary-button';
+        link.textContent = 'ไปหน้าค้นหารายวิชา'; status.after(link);
+      } else status.textContent = error.message;
+    }
   }());
 }());
