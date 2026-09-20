@@ -31,6 +31,12 @@
         learningLink.href = 'learn.html'; learningLink.textContent = 'การเรียนของฉัน';
         document.querySelector('.header-actions').prepend(learningLink);
       }
+      if (!document.querySelector('#take-pretest-link')) {
+        const preTestLink = document.createElement('a');
+        preTestLink.id = 'take-pretest-link'; preTestLink.className = 'secondary-button';
+        preTestLink.href = 'take-pretest.html'; preTestLink.textContent = 'ทำ Pre-test';
+        document.querySelector('.header-actions').prepend(preTestLink);
+      }
       if (!document.querySelector('#take-posttest-link')) {
         const postTestLink = document.createElement('a');
         postTestLink.id = 'take-posttest-link'; postTestLink.className = 'secondary-button';
