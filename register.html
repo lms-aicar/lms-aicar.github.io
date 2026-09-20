@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สมัครสมาชิกนักเรียน | AI Auto Car LMS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="account-shell">
+    <header class="account-header"><a class="account-brand" href="index.html">AI AUTO CAR / BLUEPRINT LAB</a></header>
+    <h1>สมัครสมาชิกนักเรียน</h1>
+    <p>กรอกอีเมลที่คุณเปิดอ่านได้ ระบบจะส่งรหัสยืนยันไปให้ คุณตั้งรหัสผ่านหลังยืนยันอีเมล</p>
+    <section class="account-panel" aria-labelledby="request-title">
+      <h2 id="request-title">1. ขอรหัสยืนยันทางอีเมล</h2>
+      <form id="register-request" class="admin-form">
+        <label>รหัสนักเรียน<input name="studentCode" inputmode="numeric" pattern="[0-9]{8,16}" minlength="8" maxlength="16" required autocomplete="username"></label>
+        <label>ชื่อและนามสกุลจริง<input name="displayName" maxlength="120" required autocomplete="name"></label>
+        <label>อีเมลของคุณ<input name="email" type="email" maxlength="254" required autocomplete="email"></label>
+        <button class="primary-button" type="submit">ส่งรหัสยืนยัน</button>
+      </form>
+      <p id="request-status" class="form-status" role="status" aria-live="polite"></p>
+    </section>
+    <section class="account-panel" aria-labelledby="complete-title">
+      <h2 id="complete-title">2. ยืนยันอีเมลและตั้งรหัสผ่าน</h2>
+      <form id="register-complete" class="admin-form">
+        <label>รหัสนักเรียน<input name="studentCode" inputmode="numeric" pattern="[0-9]{8,16}" minlength="8" maxlength="16" required autocomplete="username"></label>
+        <label>อีเมลที่ใช้ขอรหัส<input name="email" type="email" maxlength="254" required autocomplete="email"></label>
+        <label>รหัสยืนยันจากอีเมล<input name="verificationCode" minlength="32" required autocomplete="one-time-code"></label>
+        <label>ตั้งรหัสผ่านอย่างน้อย 12 ตัวอักษร<input name="password" type="password" minlength="12" maxlength="128" required autocomplete="new-password"></label>
+        <button class="primary-button" type="submit">ยืนยันและสมัครสมาชิก</button>
+      </form>
+      <p id="complete-status" class="form-status" role="status" aria-live="polite"></p>
+    </section>
+    <p><a href="index.html">กลับไปหน้าเข้าสู่ระบบ</a> · หากผู้ดูแลสร้างบัญชีให้แล้ว ให้ใช้หน้า <a href="activate.html">เปิดใช้บัญชี</a></p>
+  </main>
+  <script src="config.js"></script><script src="api.js"></script><script src="register.js"></script>
+</body>
+</html>

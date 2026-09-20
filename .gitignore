@@ -1,6 +1,7 @@
 *
 !.gitignore
 !index.html
+!register.html
 !activate.html
 !reset.html
 !dashboard.html
@@ -31,6 +32,7 @@
 !skill-passport.html
 !styles.css
 !app.js
+!register.js
 !activate.js
 !reset.js
 !api.js
