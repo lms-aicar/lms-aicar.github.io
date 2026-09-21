@@ -57,3 +57,4 @@ textarea { min-height: 7rem; resize: vertical; }
 #questions legend { padding: 0 .4rem; font-weight: 700; }
 #questions label { display: flex; align-items: flex-start; gap: .7rem; padding: .5rem .25rem; font-weight: 400; line-height: 1.5; cursor: pointer; overflow-wrap: anywhere; }
 #questions input[type="radio"], #questions input[type="checkbox"] { flex: 0 0 1.2rem; width: 1.2rem; height: 1.2rem; min-height: 1.2rem; margin: .1rem 0 0; padding: 0; accent-color: var(--blue); }
+a:focus-visible, select:focus-visible, textarea:focus-visible, #questions input:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }

@@ -4,6 +4,7 @@
   const start = document.querySelector('#start');
   const startButton = document.querySelector('#start-test');
   const form = document.querySelector('#test-form');
+  const submitButton = form.querySelector('[type="submit"]');
   const questions = document.querySelector('#questions');
   let attempt;
 
@@ -30,6 +31,7 @@
     if (!course.value) return;
     startButton.disabled = true;
     status.textContent = '';
+    status.removeAttribute('data-state');
     try {
       attempt = await call('PRETEST_START', { courseId: course.value });
       document.querySelector('#test-title').textContent = attempt.title;
@@ -52,12 +54,16 @@
       });
       start.hidden = true;
       form.hidden = false;
+      document.querySelector('#test-title').setAttribute('tabindex', '-1');
+      document.querySelector('#test-title').focus();
     } catch (error) { status.textContent = error.message; }
     finally { startButton.disabled = false; }
   });
 
   form.addEventListener('submit', async function (event) {
     event.preventDefault();
+    if (submitButton.disabled) return;
+    submitButton.disabled = true;
     try {
       const values = new FormData(form);
       const answers = attempt.questions.map(function (question) {
@@ -67,7 +73,9 @@
       });
       const result = await call('PRETEST_SUBMIT', { attemptId: attempt.attemptId, answers: answers });
       status.textContent = '\u0e04\u0e30\u0e41\u0e19\u0e19 ' + result.score + '% ' + (result.passed ? '\u0e1c\u0e48\u0e32\u0e19' : '\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e1c\u0e48\u0e32\u0e19');
+      status.dataset.state = 'success';
       form.hidden = true;
     } catch (error) { status.textContent = error.message; }
+    finally { submitButton.disabled = false; }
   });
 }());

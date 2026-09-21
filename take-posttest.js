@@ -4,6 +4,7 @@
   const start = document.querySelector('#start');
   const go = document.querySelector('#go');
   const form = document.querySelector('#form');
+  const submitButton = form.querySelector('[type="submit"]');
   const questions = document.querySelector('#questions');
   let attempt;
   (async function () {
@@ -20,6 +21,10 @@
     } catch (error) { status.textContent = error.message; }
   }());
   go.addEventListener('click', async function () {
+    if (go.disabled || !course.value) return;
+    go.disabled = true;
+    status.textContent = '';
+    status.removeAttribute('data-state');
     try {
       attempt = await LMS_API.call('POSTTEST_START', { assessmentId: course.value }, true);
       questions.replaceChildren();
@@ -40,10 +45,17 @@
         questions.appendChild(field);
       });
       start.hidden = true; form.hidden = false;
+      const title = document.querySelector('#title');
+      title.setAttribute('tabindex', '-1');
+      title.focus();
     } catch (error) { status.textContent = error.message; }
+    finally { go.disabled = false; }
   });
   form.addEventListener('submit', async function (event) {
     event.preventDefault();
+    if (submitButton.disabled) return;
+    submitButton.disabled = true;
+    status.textContent = '';
     try {
       const values = new FormData(form);
       const answers = attempt.questions.map(function (question) {
@@ -52,7 +64,8 @@
           { questionId: question.questionId, choiceIndex: Number(values.get(question.questionId)) };
       });
       const result = await LMS_API.call('POSTTEST_SUBMIT', { attemptId: attempt.attemptId, answers: answers }, true);
-      status.textContent = 'คะแนน ' + result.score + '%'; form.hidden = true;
+      status.textContent = 'คะแนน ' + result.score + '%'; status.dataset.state = 'success'; form.hidden = true;
     } catch (error) { status.textContent = error.message; }
+    finally { submitButton.disabled = false; }
   });
 }());
